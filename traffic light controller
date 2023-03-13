@@ -1,0 +1,46 @@
+package com.vaibhav;
+import java.util.Scanner;
+
+public class TrafficControllerSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int greenLightDuration, yellowLightDuration, redLightDuration;
+        System.out.println("Enter duration of green light in seconds:");
+        greenLightDuration = scanner.nextInt();
+        System.out.println("Enter duration of yellow light in seconds:");
+        yellowLightDuration = scanner.nextInt();
+        System.out.println("Enter duration of red light in seconds:");
+        redLightDuration = scanner.nextInt();
+
+        int currentSignal = 1; // 1 for green, 2 for yellow, 3 for red
+        int timeRemaining = greenLightDuration;
+        while (true) {
+            System.out.println("Signal " + currentSignal + " is on for " + timeRemaining + " seconds");
+
+            try {
+                Thread.sleep(1000); // wait for 1 second
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            timeRemaining--;
+            if (timeRemaining == 0) {
+                switch (currentSignal) {
+                    case 1:
+                        currentSignal = 2;
+                        timeRemaining = yellowLightDuration;
+                        break;
+                    case 2:
+                        currentSignal = 3;
+                        timeRemaining = redLightDuration;
+                        break;
+                    case 3:
+                        currentSignal = 1;
+                        timeRemaining = greenLightDuration;
+                        break;
+                }
+            }
+        }
+    }
+}
